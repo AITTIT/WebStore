@@ -1,0 +1,66 @@
+body {
+    font-family: Geneva, sans-serif;
+    background-color: #FFFFFF;
+}
+
+.navbar {
+    margin: 0px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #59656F;
+    color: white;
+    padding: 10px 20px;
+}
+
+.navbar .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-links {
+    margin: 3px;
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00d1b2;
+}
+
+.categories {
+    margin: 5px;
+    float: right;
+    width: 20%; /* Adjust as needed */
+    background-color: #59656F;
+    padding: 10px;
+    border: 1px solid #292626; /* Optional: for styling */
+}
+
+a:link, a:visited {
+    color: inherit;
+}
+
+.product-categories {
+    margin: 10px;
+    
+    
+}
+
+#products {
+    margin: 10px;
+}

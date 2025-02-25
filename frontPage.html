@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamazon</title>
+    <link rel="stylesheet" href="webStore.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Kamazon</div>
+            <ul class="nav-links">
+                <li><a href="frontPage.html">Etusivu</a></li>
+                <li><a href="shoppingCart.html">Ostoskori</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="productCategories" class="categories">
+        <h3>Tuotekategoriat</h3>
+    </div>
+    <div id="login">
+        <h1>Kirjaudu sisään</h1>
+    
+        <input type="text" name="usernameInput" id="usernameInput" placeholder="Käyttäjätunnus">
+        <br>
+
+        <input type="password" name="passwordInput" id="passwordInput" placeholder="Salasana">
+        <br>
+        <input type="button" value="Kirjaudu" id="btnLogin">
+    </div>
+    <!--Viestit kirjautumisen onnistumisesta tähän diviin-->
+    <div id="loginMessage"></div>
+
+    <!--Piilotettu uloskirjautumis divi.-->
+    <div id="logoff">
+        <h1>Tervetuloa!</h1>
+        <h3>Voit kirjautua ulos tästä:</h3>
+        <input type="button" value="Kirjaudu ulos" id="btnLogoff">
+    </div>
+
+    <!--Defer-toiminnolla varmistetaan, että JavaScript-koodi ajetaan vasta
+    kun koko HTML on ladattu. Oli välttämätön, jotta saadaan piilotettu Logoff-
+    ikkuna toimimaan ilman virheitä.-->
+    <script src="login.js" defer></script>
+    <script src="categoryList.js"></script>
+</body>
+</html>

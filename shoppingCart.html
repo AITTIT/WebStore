@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamazon Ostoskori</title>
+    <link rel="stylesheet" href="webStore.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Kamazon</div>
+            <ul class="nav-links">
+                <li><a href="frontPage.html">Etusivu</a></li>
+                <li><a href="shoppingCart.html">Ostoskori</a></li>
+            </ul>
+    </nav>
+    </header>
+    <div id="productCategories" class="categories">
+        <h3>Tuotekategoriat</h3>
+    </div>
+    <table id="cartContainer">
+        <tr>
+            <th>Tuote</th>
+            <th>Hinta</th>
+            <th>Määrä</th>
+        </tr>
+    </table>
+    <div id="cartTotal"></div>
+    <input type="button" value="Tee tilaus" id="orderBtn">
+    <script src="categoryList.js"></script>
+    <script src="shoppingCart.js"></script>
+</body>
+</html>
