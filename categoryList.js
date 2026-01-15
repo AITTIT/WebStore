@@ -1,14 +1,14 @@
-// hakee API:sta tuotekategoriat, luo vastauksesta objektin ja syöttää sen 
-// displayCategories() funktioon
+// Fetch product categories from the API and call display them
+// with displayCategories()
 fetch('https://fakestoreapi.com/products/categories')
             .then(res=>res.json())
             .then(json=>displayCategories(json))
 
 
-// Luo dynaamisesti kategorialistan.
+// Dynamically creates the category list
 function displayCategories(categories) {
     
-    // Luo 'Kaikki tuotteet' linkin kategorialistaan
+    // Creates 'Kaikki tuotteet' category to the list.
     const categoryContainer = document.getElementById('productCategories');
     const link = document.createElement('a');
     link.href = 'productList.html';
@@ -16,11 +16,11 @@ function displayCategories(categories) {
     link.className = 'product-categories';
     categoryContainer.appendChild(link);
 
-    // Muotoilua
+    // Formatting
     const linebreak = document.createElement('br');
     categoryContainer.appendChild(linebreak);
 
-    // for-loop joka käy läpi kaikki kategoriat ja kasaa niistä html-elementin
+    // Creates an HTML element of every category
     for (const category of categories) {
     
         const categoryContainer = document.getElementById('productCategories');
@@ -30,7 +30,7 @@ function displayCategories(categories) {
         link.className = 'product-categories';
         categoryContainer.appendChild(link);
     
-        // Muotoilua
+        // Formatting
         const linebreak = document.createElement('br');
         categoryContainer.appendChild(linebreak);
     }

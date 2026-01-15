@@ -29,19 +29,16 @@
         <br>
         <input type="button" value="Kirjaudu" id="btnLogin">
     </div>
-    <!--Viestit kirjautumisen onnistumisesta tähän diviin-->
+    <!--Display login pass/fail message here-->
     <div id="loginMessage"></div>
 
-    <!--Piilotettu uloskirjautumis divi.-->
+    <!--Div for log-off button-->
     <div id="logoff">
         <h1>Tervetuloa!</h1>
         <h3>Voit kirjautua ulos tästä:</h3>
         <input type="button" value="Kirjaudu ulos" id="btnLogoff">
     </div>
 
-    <!--Defer-toiminnolla varmistetaan, että JavaScript-koodi ajetaan vasta
-    kun koko HTML on ladattu. Oli välttämätön, jotta saadaan piilotettu Logoff-
-    ikkuna toimimaan ilman virheitä.-->
     <script src="login.js" defer></script>
     <script src="categoryList.js"></script>
 </body>

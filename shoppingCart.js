@@ -1,7 +1,6 @@
 const addToCartBtn = document.getElementById('addToCart');
 
-// Tarkastellaan ollaanko tuotesivulla, ja jos ollaan,
-// asetetaan addToCartBtn:ille kuuntelija.
+// If on product.html, set an event listener for 'add to cart' button
 if (addToCartBtn) {
     addToCartBtn.addEventListener('click', fetchProductInfo);
 }
@@ -9,46 +8,43 @@ if (addToCartBtn) {
 const shoppingCartList = document.getElementById('cartContainer');
 const orderBtn = document.getElementById('orderBtn');
 
-// tarkastellaan ollaanko ostoskori-sivulla, ja jos ollaan
-// asetetaan kuuntelija tilaus-napille ja kutsutaan displayCart()
+// If in shopping cart, set a listener for 'order' button and display cart
 if (shoppingCartList) {
     orderBtn.addEventListener('click', sendOrder);
     displayCart();    
 }
 
-// Lähettää "tilauksen" jos mahdollista
+// Sends order if possible
 function sendOrder() {
     
-    // haetaan tieto ollaankoo kirjauduttu sisään local storagesta.
+    // fetch logged in information from browser local storage
     const login = localStorage.getItem('isLoggedIn');
 
-    // tarkastetaan, onko login true, ja jos on, suoritetaan tilaus.
-    // Jos ei ole, kehotetaan käyttäjää kirjautumaan.
-    if (login) {    //Tämä on siis true boolean, vaikka se on string jossa lukee true? Vai jotenkin 'truthy'?
+    // check if login true and execute order, otherwise give error message.
+    if (login) {    
         window.alert('Tilaus lähetetty.');
-        // simuloidaan ostoskorin lähettämistä eteenpäin tulostamalla konsoliin
+
+        // Simulate saving the order by printing into console
         console.log(getCart());
-        // Tyhjätään kauppakori.
         emptyCart();
     } else {
         window.alert('Kirjaudu sisään tilataksesi.');
     }
 }
 
-// Näytetään ostoskorin sisältö ostoskori-sivulla.
 function displayCart() {
-    // Haetaan ostoskori muuttujaan
+
     const cart = getCart();
 
-    // Luodaan polku diviin, ja tyhjätään se
+    // Create div handle and empty it
     const cartContainer = document.getElementById('cartContainer');
     cartContainer.innerHtml = '';
 
-    // Muuttuja, johon lasketaan koko ostoskorin arvo.
+    // The total price of the cart.
     let cartTotal = 0;
 
-    // Loopataan kaikki ostoskorissa olevat tuotteet
-    // ja luodaan niistä taulukon rivejä
+
+    // Create a table of the products in the shopping cart
     for (const product of cart) {
 
         const cartRow = document.createElement('tr');
@@ -66,13 +62,13 @@ function displayCart() {
 
         cartContainer.appendChild(cartRow);
 
-        //lisätään tuotteen hinta kertaa määrä ostoskorin kokonaishintaan.
+        // Update cart total price
         cartTotal += product.price * product.quantity;
 
     }
 
 
-    // Luodaan kokonaishinnan taulukkorivi ja liitetään se html:ään
+    // Create row for total price and append to table
     const cartRow = document.createElement('tr');
     const emptyCell = document.createElement('td');
     emptyCell.textContent = ' ';
@@ -86,21 +82,20 @@ function displayCart() {
 }
 
 
-// Haetaan tuotteen tiedot käyttämällä URLista saatua id:tä
-// ja kutsutaan createProductObjectia
+
+// Fetch product information with the ID in the URL
 function fetchProductInfo() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
     console.log(productId);
 
-    // Aiemmin ongittua ID:tä käytetään nyt hakemaan oikea tuote tietokannasta
     fetch(`https://fakestoreapi.com/products/${productId}`)
         .then(response => response.json())
         .then(product => createProductObject(product));
 }
 
-// luodaan haetusta tuoteobjektista ostoskorituote,
-// jolla on vähän eri ominaisuudet.
+// Create a product object with only the properties that are
+// needed for the product when it is in the cart.
 function createProductObject(product) {
     console.log(product);
     const cartItem = {
@@ -110,19 +105,18 @@ function createProductObject(product) {
         quantity: 1
     };
     console.log(cartItem);
-    // Lisätään luotu ostoskorituote ostoskorilistaan.
+
     addToCart(cartItem);
 }
 
 
-// Lisää ostoskoriin argumenttina saadun tuotteen.
+// Add product to cart
 function addToCart(product) {
-    // Hakee ostoskorin getCart() funktiolla,
     const cart = getCart();
     
+
+    // Check if item already in cart
     let existingItem = null;
-    // Verrataan ostoskorissa olevia tuotteita lisättävään tuotteeseen
-    // jos tuote on jo ostoskorissa
     for (const item of cart) {
         if (item.id === product.id) {
             existingItem = item;
@@ -130,26 +124,21 @@ function addToCart(product) {
         }        
     }
 
-    // Jos 'existingItem' on pysynyt nullina, eli tuotetta ei ole löytynyt
-    // ostoskorista, pushataan tuote ostoskoriin, muuten kasvatetaan
-    // ostoskorissa olevan tuotteen määrää.
+    // If the item is already in cart, increase quantity, otherwise push() to array
     if (existingItem) {
         existingItem.quantity += product.quantity;
     } else {
         cart.push(product);
     }
 
-    // Lopuksi tallennetaan päivitetty ostoskori.
+    // Save new cart to local storage
     saveCart(cart);
 }
 
-// Hakee ostoskorin local storagesta 
+// Fetches shopping cart from local storage. If no shopping cart, returns an empty array.
 function getCart() {
-    // getItem() hakee avainta vastaavan arvon, jos ei löydy, palauttaa null.
     const cart = localStorage.getItem("shoppingCart");
-    //Jos ostoskori löytyy, muuttaa sen listaksi objekteja
-    // ja palauttaa sen. Jos ei, palauttaa listan,
-    // koska silloin ostoskoriin ei vielä ole lisätty mitään.
+    
     if (cart) {
         return JSON.parse(cart);
     } else {
@@ -157,13 +146,12 @@ function getCart() {
     }
 }
 
-// Tallettaa luodun sisään otetun kauppakorin local storageen tekstimuotoisena.
-// cart on lista joka koostuu tuotteista.
+// Saves cart into local storage as a JSON
 function saveCart(cart) {
     localStorage.setItem("shoppingCart", JSON.stringify(cart));
 }
 
-// Tyhjää Ostoskorin tilauksen yhteydessä.
+// Empties cart when an order is successfully made
 function emptyCart() {
     let emptyCart = [];
     saveCart(emptyCart);

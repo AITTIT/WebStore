@@ -1,13 +1,12 @@
-// Luo objektin osoitteen loppuosasta
+// Creates an object that contains a string of the ID
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams);
-// Luodusta objektista otetaan id:n arvo, jota sitten käytetään
-// oikean tuotteen hakemiseen tietokannasta.
+// Extract the ID if it exists
 const categoryID = urlParams.get('id');
 console.log(categoryID);
 
-// Jos kategoriaID, toisin sanoen kategorian nimi löytyy URLista,
-// haetaan kyseisen kategorian tuotteet. Jos ei, haetaan 'kaikki tuotteet'.
+
+// fetch the category according to ID, or all products if no ID
 if (categoryID) {
     fetch(`https://fakestoreapi.com/products/category/${categoryID}`)
     .then(res=>res.json())
@@ -21,33 +20,30 @@ if (categoryID) {
 
 
 function displayProduct(list) {
-    // Tuotetietojen tarkasteluun konsolissa looppi.
+    // print product list in console
     for (let key in list) {
         console.log(list[key]);
     }
 
-    // luodaan polku products diviin
+    // Path to products div
     const productContainer = document.getElementById('products');
 
-    // fetchistä syötetään funktioon 'list', joka on kaikki kyseisen kategorian
-    // sisältävä tuoteobjektien lista. Niiden pohjalta luodaan forEach() rakenteella
-    // luodaan linkkielementtejä.
+    // Create HTML links for each of the product in the category
     list.forEach(product => {
-        // Luo tuotteelle linkkielementin
+
         const link = document.createElement('a');
 
-        // Antaa kyseisen tuotteen a-elementille href attribuutin, jonka
-        // arvo tulee tuoteobjektin id:stä, joka sitten voidaan poimia
-        // tuotesivulle siirryttäessä.
+        // Product id set into the address, so that it can be used to fetch product
         link.href = `product.html?id=${product.id}`;
-        // Antaa linkin tekstiksi tuotteen nimen.
+        
         link.textContent = product.title;
-        // Antaa kaikille linkeille luokan jota voi sitten käyttää muotoilussa.
+
+        // Assigns class for all links
         link.className = 'product-link';
-        // Liittää tehdyn linkin diviin jonka id on products
+        // Link added to div
         productContainer.appendChild(link);
 
-        // Muotoilua
+        // Formatting
         const linebreak = document.createElement('br');
         productContainer.appendChild(linebreak);
     });
